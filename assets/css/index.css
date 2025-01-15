@@ -47,41 +47,17 @@ header .menu-right a:hover {
 }
 
 .hero-image {
-  margin-top: 50px;
-  width: 100%;
-  height: 30vh;
-  overflow: hidden;
+  background-image: url('../images/McLaren-GT_2.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: white; /* Garante contraste com a imagem */
+  text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.7); /* Realça o texto em fundos claros */
+  height: 25rem;
+  display: grid;
+  align-items: center;
 }
 
-.hero-image img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
-.hero-image .hero-text {
-  position: absolute; 
-  top: 20%;
-  left: 50%; 
-  transform: translate(-50%, -50%); 
-  text-align: center;
-  color: #fff;
-  background-color: rgba(0, 0, 0, 0.6); 
-  padding: 20px;
-  border-radius: 10px;
-  width: 800px;
-  height: 130px;
-}
-
-.hero-image .hero-text h1 {
-  font-size: 40px;
-  margin-bottom: 10px;
-}
-
-.hero-image .hero-text p {
-  font-size: 20px;
-}
 
 .content {
   padding: 20px;

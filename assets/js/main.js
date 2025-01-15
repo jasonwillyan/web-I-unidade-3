@@ -1,10 +1,10 @@
 import carros from './carros.js';
 
 async function fetchVehicles() {
-  const storedVehicles = JSON.parse(localStorage.getItem('vehicles'));
+  const storedVeiculos = JSON.parse(localStorage.getItem('veiculos'));
 
-  if (storedVehicles && storedVehicles.length > 0) {
-    renderVehicles(storedVehicles);
+  if (storedVeiculos && storedVeiculos.length > 0) {
+    renderVehicles(storedVeiculos);
     return;
   }
 
@@ -17,25 +17,26 @@ async function fetchVehicles() {
 
     const data = await response.json();
 
-    const vehicles = data.slice(0, 8);
+    const veiculos = data.slice(0, 8);
 
-    vehicles.forEach(vehicle => {
-      if (!vehicle.id) {
-        vehicle.id = generateUniqueId();
+    veiculos.forEach(veiculo => {
+      if (!veiculo.id) {
+        veiculo.id = generateUniqueId();
       }
 
-      vehicle.model = getRandomModel();
-      vehicle.color = getRandomColor();
-      vehicle.type = getRandomType();
-      vehicle.kilometers = getRandomKilometers();
-      vehicle.doors = getRandomDoors();
-      vehicle.image = getRandomCarImage();
-      vehicle.price = getRandomPrice();
+      veiculo.marca = getRandomBrand();
+      veiculo.modelo = getRandomModel();
+      veiculo.cor = getRandomColor();
+      veiculo.tipo = getRandomType();
+      veiculo.km = getRandomKilometers();
+      veiculo.num_portas = getRandomDoors();
+      veiculo.url_imagem = getRandomCarImage();
+      veiculo.preco = getRandomPrice();
     });
 
-    localStorage.setItem('vehicles', JSON.stringify(vehicles));
+    localStorage.setItem('veiculos', JSON.stringify(veiculos));
 
-    renderVehicles(vehicles);
+    renderVehicles(veiculos);
   } catch (error) {
     console.error('Erro ao buscar os veículos:', error);
   }
@@ -45,50 +46,55 @@ function generateUniqueId() {
   return Date.now() + Math.floor(Math.random() * 1000); 
 }
 
-function renderVehicles(vehicles) {
-  const vehicleList = document.getElementById('vehicle-list');
-  vehicleList.innerHTML = '';
+function renderVehicles(veiculos) {
+  const listaVeiculos = document.getElementById('lista-veiculos');
+  listaVeiculos.innerHTML = '';
 
-  vehicles.forEach(vehicle => {
-    const vehicleCard = document.createElement('div');
-    vehicleCard.classList.add('col-md-4', 'vehicle-card');
-    vehicleCard.setAttribute('data-id', vehicle.id); 
+  veiculos.forEach(veiculo => {
+    const veiculoCard = document.createElement('div');
+    veiculoCard.classList.add('col-md-4', 'card-veiculos');
+    veiculoCard.setAttribute('data-id', veiculo.id); 
 
-    vehicleCard.innerHTML = `
+    veiculoCard.innerHTML = `
       <div class="card">
-        <img src="${vehicle.image}" alt="${vehicle.model}" class="vehicle-img">
+        <img src="${veiculo.url_imagem}" alt="${veiculo.modelo}" class="veiculo-img">
         <div class="card-body">
-          <h5 class="card-title">${vehicle.model}</h5>
-          <p class="card-text"><strong>Marca:</strong> ${vehicle.albumId}</p>
-          <p class="card-text"><strong>Modelo:</strong> ${vehicle.model}</p>
+          <h5 class="card-title">${veiculo.modelo}</h5>
+          <p class="card-text"><strong>Marca:</strong> ${veiculo.marca}</p>
+          <p class="card-text"><strong>Modelo:</strong> ${veiculo.modelo}</p>
           <p class="card-text"><strong>Ano:</strong> 2021</p>
-          <p class="card-text"><strong>Cor:</strong> ${vehicle.color}</p>
-          <p class="card-text"><strong>Tipo:</strong> ${vehicle.type}</p>
-          <p class="card-text"><strong>Quilometragem:</strong> ${vehicle.kilometers} km</p>
-          <p class="card-text"><strong>Portas:</strong> ${vehicle.doors}</p>
-          <p class="card-text"><strong>ID:</strong> ${vehicle.id}</p>
-          <p class="price">R$ ${vehicle.price}</p>
+          <p class="card-text"><strong>Cor:</strong> ${veiculo.cor}</p>
+          <p class="card-text"><strong>Tipo:</strong> ${veiculo.tipo}</p>
+          <p class="card-text"><strong>Quilometragem:</strong> ${veiculo.km} km</p>
+          <p class="card-text"><strong>Portas:</strong> ${veiculo.num_portas}</p>
+          <p class="card-text"><strong>ID:</strong> ${veiculo.id}</p>
+          <p class="price">R$ ${veiculo.preco}</p>
         </div>
       </div>
     `;
 
-    vehicleList.appendChild(vehicleCard);
+    listaVeiculos.appendChild(veiculoCard);
   });
 }
 
+function getRandomBrand() {
+  const marcas = ['Toyota', 'Volkswagen', 'Honda', 'Chevrolet', 'Ford', 'Fiat'];
+  return marcas[Math.floor(Math.random() * marcas.length)];
+}
+
 function getRandomModel() {
-  const models = ['Fusca', 'Gol', 'Civic', 'Corolla', 'Onix', 'Mobi'];
-  return models[Math.floor(Math.random() * models.length)];
+  const modelos = ['Fusca', 'Gol', 'Civic', 'Corolla', 'Onix', 'Mobi'];
+  return modelos[Math.floor(Math.random() * modelos.length)];
 }
 
 function getRandomColor() {
-  const colors = ['Preto', 'Branco', 'Vermelho', 'Azul', 'Prata', 'Verde'];
-  return colors[Math.floor(Math.random() * colors.length)];
+  const cores = ['Preto', 'Branco', 'Vermelho', 'Azul', 'Prata', 'Verde'];
+  return cores[Math.floor(Math.random() * cores.length)];
 }
 
 function getRandomType() {
-  const types = ['Sedan', 'Hatch', 'SUV', 'Picape', 'Crossover'];
-  return types[Math.floor(Math.random() * types.length)];
+  const tipos = ['Sedan', 'Hatch', 'SUV', 'Picape', 'Crossover'];
+  return tipos[Math.floor(Math.random() * tipos.length)];
 }
 
 function getRandomKilometers() {
